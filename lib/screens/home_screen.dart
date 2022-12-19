@@ -1,5 +1,6 @@
 import 'package:exam_practic_getx/controllers/controllers.dart';
 import 'package:exam_practic_getx/models/user.dart';
+import 'package:exam_practic_getx/screens/input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // Recuperar el provider
+    // Recuperar de GETX
     UserController userController = Get.put(UserController());
 
     return Scaffold(
@@ -48,6 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
             : LlistaUsuaris(
                 llistaUsuaris: userController.userResponse!.data as List<User>),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          Get.toNamed('/input');
+        }),
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -58,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       itemBuilder: (BuildContext context, int index) {
         final usAvatar;
 
+        // Comprobació de si te imatge.
         if (llistaUsuaris[index].avatar != null) {
           usAvatar = llistaUsuaris[index].avatar;
         } else {
@@ -71,11 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
               margin: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 0.0),
               child: ListTile(
                 // Obrim la segona pàgina
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  '/detail',
-                  arguments: llistaUsuaris[index],
-                ),
+
+                onTap: () =>
+                    Get.toNamed('/detail', arguments: llistaUsuaris[index]),
                 title: Text(llistaUsuaris[index].firstName +
                     " " +
                     llistaUsuaris[index].lastName),

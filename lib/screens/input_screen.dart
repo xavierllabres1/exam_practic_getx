@@ -1,5 +1,6 @@
 import 'package:exam_practic_getx/controllers/controllers.dart';
 import 'package:exam_practic_getx/models/models.dart';
+import 'package:exam_practic_getx/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -111,7 +112,7 @@ class InputScreen extends StatelessWidget {
               userController.userResponse!.data!.add(userRet);
 
               // Tornar Enrere
-              Navigator.of(context).pop();
+              Get.off(HomeScreen());
             }
           }
         },
