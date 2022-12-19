@@ -43,7 +43,6 @@ class UserController extends GetxController {
 
         //Emplenar object3e
         userResponse = UserResponse.fromJson(result.body);
-        print(userResponse);
       } else {
         ///error
         print("error");

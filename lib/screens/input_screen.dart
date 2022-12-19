@@ -1,5 +1,7 @@
+import 'package:exam_practic_getx/controllers/controllers.dart';
 import 'package:exam_practic_getx/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class InputScreen extends StatelessWidget {
   // Controllers
@@ -9,7 +11,8 @@ class InputScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Variables
+    // Recuperar de GETX
+    UserController userController = Get.put(UserController());
 
     return Scaffold(
       appBar: AppBar(
@@ -54,62 +57,66 @@ class InputScreen extends StatelessWidget {
           ),
         ],
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: FloatingActionButton(
-      // onPressed: () {
-      //   //Validar que sigui correcte
-      //   if (_nomController.text.isEmpty) {
-      //     //Alerta de nom buid
-      //     showDialog(
-      //       context: context,
-      //       builder: (BuildContext context) {
-      //         return AlertDialog(
-      //           title: Text('No pots deixar el camp del nom en blanc'),
-      //           actions: <Widget>[
-      //             FloatingActionButton(
-      //               child: Icon(Icons.check),
-      //               onPressed: () {
-      //                 Navigator.of(context).pop();
-      //               },
-      //             ),
-      //           ],
-      //         );
-      //       },
-      //     );
-      //   } else {
-      //     if (!validateEmail(_correuController.text)) {
-      //       // Alerta de mail
-      //       showDialog(
-      //         context: context,
-      //         builder: (BuildContext context) {
-      //           return AlertDialog(
-      //             title: Text('Has d\'introduir un correu electrònic vàlid'),
-      //             actions: <Widget>[
-      //               FloatingActionButton(
-      //                 child: Icon(Icons.check),
-      //                 onPressed: () {
-      //                   Navigator.of(context).pop();
-      //                 },
-      //               ),
-      //             ],
-      //           );
-      //         },
-      //       );
-      //     } else {
-      //       //Es permet el guardar una persona sense llinatges ni sense contrasenya
-      //       //Emplenar l'objecte perRet per retornar a la pantalla inicial.
-      //       final User userRet = User(
-      //           email: _correuController.text,
-      //           firstName: _nomController.text,
-      //           lastName: _llinatgeController.text);
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //Validar que sigui correcte
+          if (_nomController.text.isEmpty) {
+            //Alerta de nom buid
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('No pots deixar el camp del nom en blanc'),
+                  actions: <Widget>[
+                    FloatingActionButton(
+                      child: Icon(Icons.check),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            if (!validateEmail(_correuController.text)) {
+              // Alerta de mail
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Has d\'introduir un correu electrònic vàlid'),
+                    actions: <Widget>[
+                      FloatingActionButton(
+                        child: Icon(Icons.check),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              //Es permet el guardar una persona sense llinatges ni sense contrasenya
+              //Emplenar l'objecte perRet per retornar a la pantalla inicial.
+              final User userRet = User(
+                  email: _correuController.text,
+                  firstName: _nomController.text,
+                  lastName: _llinatgeController.text);
 
-      //       // Retornar l'objecte emplenat
-      //       Navigator.of(context).pop(userRet);
-      //     }
-      //   }
-      // },
-      // child: Icon(Icons.save),
-      // ),
+              // AGREGAR A LA LLISTA del OBJECTE USER RESPONSE
+              // SERA TEMPORAL, FINS QUE REFRESQUI LA PAGINA
+              userController.userResponse!.data!.add(userRet);
+
+              // Tornar Enrere
+              Navigator.of(context).pop();
+            }
+          }
+        },
+        child: Icon(Icons.save),
+      ),
     );
   }
 
